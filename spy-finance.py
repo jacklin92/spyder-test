@@ -10,20 +10,28 @@ while x == 1:
     else:
         x = -1
 for i in range(len(stock_num)):
-    url = f"https://tw.stock.yahoo.com/quote/{stock_num[i]}"  # 台積電 Yahoo 股市網址
-    web = requests.get(url)  # 取得網頁內容
-    soup = BeautifulSoup(web.text, "html.parser")  # 轉換內容
-    title = soup.find("h1")  # 找到 h1 的內容
-    a = soup.select(".Fz\(32px\)")[0]  # 找到第一個 class 為 Fz(32px) 的內容，如果出現錯誤，可以使用 .Fz\(32px\) 轉義
-    b = soup.select(".Fz\(20px\)")[1]  # 找到第一個 class 為 Fz(20px) 的內容，如果出現錯誤，可以使用 .Fz\(20px\) 轉義
-    s = ""  # 漲或跌的狀態
+    url = f"https://tw.stock.yahoo.com/quote/{stock_num[i]}"  # Yahoo's url
+    web = requests.get(url)  # get html content
+    soup = BeautifulSoup(web.text, "html.parser")
+    title = soup.find("h1")  # Find h1 content
+    a = soup.select(".Fz\(32px\)")[
+        0
+    ]  # Find first class content have Fz(32px) ，if error，use.Fz\(32px\)
+    b = soup.select(".Fz\(20px\)")[
+        1
+    ]  # Find first class content have Fz(20px) if error，use.Fz\(20px\)
+    s = ""  # up/down trend
     try:
-    # 如果 main-0-QuoteHeader-Proxy id 的 div 裡有 C($c-trend-down) 的 class表示狀態為下跌，若是C($c-trend-up)則是上漲
+        # if main-0-QuoteHeader-Proxy id 'S div have C($c-trend-down) is means down trend，elif C($c-trend-up) means up trend
         if soup.select("#main-0-QuoteHeader-Proxy")[0].select(".C\\(\\$c-trend-up\\)"):
             s = "+"
-        elif soup.select("#main-0-QuoteHeader-Proxy")[0].select(".C\\(\\$c-trend-down\\)"):
-            s="-"
-        print(f"{title.get_text()} {stock_num[i]}: {a.get_text()} ( {s}{b.get_text()} )")  # 印出結果
+        elif soup.select("#main-0-QuoteHeader-Proxy")[0].select(
+            ".C\\(\\$c-trend-down\\)"
+        ):
+            s = "-"
+        print(
+            f"{title.get_text()} {stock_num[i]}: {a.get_text()} ( {s}{b.get_text()} )"
+        )
     except:
-            s = "Error"
-            print(s)  # 印出結果
+        s = "Error"
+        print(s)  # Error Msg
