@@ -19,7 +19,8 @@ for i in range(len(stock_num)):
     ]  # Find first class content have Fz(32px) ，if error，use.Fz\(32px\)
     b = soup.select(".Fz\(20px\)")[
         1
-    ]  # Find first class content have Fz(20px) if error，use.Fz\(20px\)
+    ]  # Find first class content have Fz(20px) if error，use.Fz\(20px\)    
+    c= soup.select(".Fz\(16px\)")[0]
     s = ""  # up/down trend
     try:
         # if main-0-QuoteHeader-Proxy id 'S div have C($c-trend-down) is means down trend，elif C($c-trend-up) means up trend
@@ -30,8 +31,9 @@ for i in range(len(stock_num)):
         ):
             s = "-"
         print(
-            f"{title.get_text()} {stock_num[i]}: {a.get_text()} ( {s}{b.get_text()} )"
+            f"{title.get_text()} {stock_num[i]}: {a.get_text()} ( {s}{b.get_text()}) :成交量:{c.get_text()}"
         )
     except:
         s = "Error"
         print(s)  # Error Msg
+
