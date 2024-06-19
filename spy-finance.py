@@ -13,7 +13,7 @@ for i in range(len(stock_num)):
     url = f"https://tw.stock.yahoo.com/quote/{stock_num[i]}"  # Yahoo's url
     web = requests.get(url)  # get html content
     soup = BeautifulSoup(web.text, "html.parser")
-    title = soup.find("h1")  # Find h1 content
+    title = soup.find("h2")  # Find stock's title
     a = soup.select(".Fz\(32px\)")[
         0
     ]  # Find first class content have Fz(32px) ，if error，use.Fz\(32px\)
