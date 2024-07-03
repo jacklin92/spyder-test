@@ -14,13 +14,13 @@ for i in range(len(stock_num)):
     web = requests.get(url)  # get html content
     soup = BeautifulSoup(web.text, "html.parser")
     title = soup.find("h2")  # Find stock's title
-    a = soup.select(".Fz\(32px\)")[
+    a = soup.select(".Fz\(32px\)")[ # type: ignore
         0
     ]  # Find first class content have Fz(32px) ，if error，use.Fz\(32px\)
-    b = soup.select(".Fz\(20px\)")[
+    b = soup.select(".Fz\(20px\)")[ # type: ignore
         1
     ]  # Find first class content have Fz(20px) if error，use.Fz\(20px\)    
-    c= soup.select(".Fz\(16px\)")[0]
+    c= soup.select(".Fz\(16px\)")[0] # type: ignore
     s = ""  # up/down trend
     try:
         # if main-0-QuoteHeader-Proxy id 'S div have C($c-trend-down) is means down trend，elif C($c-trend-up) means up trend
@@ -31,9 +31,9 @@ for i in range(len(stock_num)):
         ):
             s = "-"
         print(
-            f"{title.get_text()} {stock_num[i]}: {a.get_text()} ( {s}{b.get_text()}) :成交量:{c.get_text()}"
+            f"{title.get_text()} {stock_num[i]}: {a.get_text()} ( {s}{b.get_text()}) :成交量:{c.get_text()}" # type: ignore
         )
     except:
         s = "Error"
         print(s)  # Error Msg
-
+        
